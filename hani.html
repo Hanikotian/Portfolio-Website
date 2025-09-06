@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hani Kotian - Retro Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f380f 0%, #0b5d0b 50%, #0a4a0a 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Orbitron', monospace;
+            overflow-x: auto;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        .gameboy {
+            background: linear-gradient(135deg, #9BBB59 0%, #8BA946 50%, #7A9735 100%);
+            width: 700px;
+            height: 900px;
+            border-radius: 25px;
+            padding: 50px 45px;
+            box-shadow:
+                inset 0 0 80px rgba(0, 0, 0, 0.1),
+                0 30px 60px rgba(0, 0, 0, 0.3),
+                0 0 0 4px #7A9735,
+                0 0 0 8px #5A7325;
+            position: relative;
+        }
+
+        .screen-container {
+            background: #2a2a2a;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 40px;
+            box-shadow:
+                inset 0 0 30px rgba(0, 0, 0, 0.6),
+                inset 0 0 0 3px #333;
+        }
+
+        .screen {
+            background: #9BBB59;
+            width: 100%;
+            height: 380px;
+            border-radius: 8px;
+            padding: 20px;
+            font-size: 12px;
+            line-height: 1.4;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .pixel-text {
+            color: #0f380f;
+            font-weight: 700;
+            text-shadow: 1px 1px 0px rgba(15, 56, 15, 0.1);
+            image-rendering: pixelated;
+        }
+
+        .title {
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 15px;
+            animation: blink 2s infinite;
+            color: #0f380f;
+            font-weight: 900;
+        }
+
+        @keyframes blink {
+
+            0%,
+            50% {
+                opacity: 1;
+            }
+
+            51%,
+            100% {
+                opacity: 0.8;
+            }
+        }
+
+        .content-area {
+            height: 320px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #0f380f #9BBB59;
+        }
+
+        .content-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .content-area::-webkit-scrollbar-track {
+            background: #9BBB59;
+            border-radius: 4px;
+        }
+
+        .content-area::-webkit-scrollbar-thumb {
+            background: #0f380f;
+            border-radius: 4px;
+        }
+
+        .menu-item {
+            margin-bottom: 10px;
+            padding: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 4px;
+            font-size: 11px;
+        }
+
+        .menu-item:hover {
+            background: rgba(15, 56, 15, 0.1);
+            transform: translateX(5px);
+        }
+
+        .menu-item.selected {
+            background: #0f380f;
+            color: #9BBB59;
+            transform: translateX(10px);
+            box-shadow: 0 2px 8px rgba(15, 56, 15, 0.3);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .dpad {
+            width: 120px;
+            height: 120px;
+            position: relative;
+        }
+
+        .dpad-btn {
+            position: absolute;
+            background: linear-gradient(135deg, #8BA946 0%, #7A9735 100%);
+            border: none;
+            cursor: pointer;
+            transition: all 0.1s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 2px solid #5A7325;
+        }
+
+        .dpad-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .dpad-up,
+        .dpad-down {
+            width: 35px;
+            height: 45px;
+            left: 42.5px;
+        }
+
+        .dpad-up {
+            top: 0;
+            border-radius: 12px 12px 4px 4px;
+        }
+
+        .dpad-down {
+            bottom: 0;
+            border-radius: 4px 4px 12px 12px;
+        }
+
+        .dpad-left,
+        .dpad-right {
+            width: 45px;
+            height: 35px;
+            top: 42.5px;
+        }
+
+        .dpad-left {
+            left: 0;
+            border-radius: 12px 4px 4px 12px;
+        }
+
+        .dpad-right {
+            right: 0;
+            border-radius: 4px 12px 12px 4px;
+        }
+
+        .dpad-center {
+            width: 35px;
+            height: 35px;
+            left: 42.5px;
+            top: 42.5px;
+            border-radius: 4px;
+            background: #5A7325;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .action-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #8BA946 0%, #7A9735 100%);
+            color: #0f380f;
+            font-family: 'Orbitron', monospace;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.1s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 2px solid #5A7325;
+        }
+
+        .action-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .power-led {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e74c3c;
+            position: absolute;
+            top: 25px;
+            left: 70px;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 15px #e74c3c;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        .speaker {
+            position: absolute;
+            top: 25px;
+            right: 45px;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 3px;
+            width: 80px;
+        }
+
+        .speaker-hole {
+            width: 4px;
+            height: 4px;
+            background: #5A7325;
+            border-radius: 50%;
+        }
+
+        .brand {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #0f380f;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            font-size: 9px;
+            margin-bottom: 8px;
+            border-bottom: 2px solid #0f380f;
+            padding-bottom: 8px;
+            color: #0f380f;
+            font-weight: bold;
+        }
+
+
+        .decorative-strip {
+            position: absolute;
+            left: 70px;
+            /* match .gameboy padding */
+            right: 70px;
+            height: 8px;
+            background: linear-gradient(90deg, #8BA946 0%, #9BBB59 50%, #8BA946 100%);
+            top: 150px;
+            border-radius: 4px;
+        }
+
+        .volume-slider {
+            position: absolute;
+            right: -25px;
+            top: 300px;
+            width: 6px;
+            height: 60px;
+            background: #5A7325;
+            border-radius: 3px;
+            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .volume-slider::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 15px;
+            background: #7A9735;
+            border-radius: 4px;
+            left: -1px;
+            top: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="gameboy">
+            <div class="decorative-strip"></div>
+            <div class="volume-slider"></div>
+
+            <div class="power-led"></div>
+            <div class="speaker">
+                <div class="speaker-hole"></div>
+                <div class="speaker-hole"></div>
+                <div class="speaker-hole"></div>
+                <div class="speaker-hole"></div>
+                <div class="speaker-hole"></div>
+                <div class="speaker-hole"></div>
+                <div class="speaker-hole"></div>
+                <div class="speaker-hole"></div>
+                <div class="speaker-hole"></div>
+                <div class="speaker-hole"></div>
+                <div class="speaker-hole"></div>
+                <div class="speaker-hole"></div>
+            </div>
+
+            <div class="screen-container">
+                <div class="screen pixel-text">
+                    <div class="title">HANI KOTIAN</div>
+                    <div class="stats-bar">
+                        <span>FINAL YEAR CGPA: 8.4</span>
+                        <span>PROJECTS: 3</span>
+                        <span>PAPERS: 2</span>
+                        <span>MUMBAI, IN</span>
+                    </div>
+                    <div class="content-area" id="content">
+                        <div class="menu-item selected" data-screen="main">► MAIN MENU</div>
+                        <div class="menu-item" data-screen="about"> ABOUT</div>
+                        <div class="menu-item" data-screen="projects"> PROJECTS</div>
+                        <div class="menu-item" data-screen="research"> RESEARCH</div>
+                        <div class="menu-item" data-screen="skills"> SKILLS</div>
+                        <div class="menu-item" data-screen="contact"> CONTACT</div>
+                        <div class="menu-item" data-screen="achievements"> ACHIEVEMENTS</div>
+
+                        <div style="margin-top: 15px; border-top: 2px solid #0f380f; padding-top: 10px;">
+                            <div style="font-size: 10px; color: #0f380f; font-weight: bold;">COMPUTER ENGINEERING
+                                GRADUATE</div>
+                            <div style="font-size: 10px; color: #0f380f; font-weight: bold;">AI/ML RESEARCHER • IEEE
+                                PUBLISHED</div>
+                            <div style="font-size: 10px; color: #0f380f; font-weight: bold;">DEEP LEARNING SPECIALIST
+                            </div>
+                            <div style="font-size: 10px; margin-top: 8px; color: #0f380f; font-weight: bold;">BUILDING
+                                INNOVATIVE TECHNOLOGIES</div>
+                            <div style="font-size: 10px; color: #0f380f; font-weight: bold;">FOR HEALTHCARE & BEYOND
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <div class="dpad">
+                    <button class="dpad-btn dpad-up" onclick="navigate('up')"></button>
+                    <button class="dpad-btn dpad-down" onclick="navigate('down')"></button>
+                    <button class="dpad-btn dpad-left" onclick="navigate('left')"></button>
+                    <button class="dpad-btn dpad-right" onclick="navigate('right')"></button>
+                    <div class="dpad-center"></div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="action-btn" onclick="selectItem()">A</button>
+                    <button class="action-btn" onclick="goBack()">B</button>
+                </div>
+            </div>
+
+            <div class="brand">HANI</div>
+        </div>
+    </div>
+
+    <script>
+        let currentIndex = 0;
+        let currentScreen = 'main';
+
+        const screens = {
+            main: `<div class="menu-item selected" data-screen="main">► MAIN MENU</div>
+                   <div class="menu-item" data-screen="about">  ABOUT</div>
+                   <div class="menu-item" data-screen="projects">  PROJECTS</div>
+                   <div class="menu-item" data-screen="research">  RESEARCH</div>
+                   <div class="menu-item" data-screen="skills">  SKILLS</div>
+                   <div class="menu-item" data-screen="contact">  CONTACT</div>
+                   <div class="menu-item" data-screen="achievements">  ACHIEVEMENTS</div>
+                   
+                   <div style="margin-top: 15px; border-top: 2px solid #0f380f; padding-top: 10px;">
+                       <div style="font-size: 10px; color: #0f380f; font-weight: bold;">COMPUTER ENGINEERING GRADUATE</div>
+                       <div style="font-size: 10px; color: #0f380f; font-weight: bold;">AI/ML RESEARCHER • IEEE PUBLISHED</div>
+                       <div style="font-size: 10px; color: #0f380f; font-weight: bold;">DEEP LEARNING SPECIALIST</div>
+                       <div style="font-size: 10px; margin-top: 8px; color: #0f380f; font-weight: bold;">BUILDING INNOVATIVE TECHNOLOGIES</div>
+                       <div style="font-size: 10px; color: #0f380f; font-weight: bold;">FOR HEALTHCARE & BEYOND</div>
+                   </div>`,
+
+            about: `<div style="font-size: 14px; margin-bottom: 12px; color: #0f380f; font-weight: bold;">ABOUT HANI</div>
+                    <div style="font-size: 10px; line-height: 1.5; color: #0f380f;">
+                        FINAL YEAR COMPUTER ENGINEERING<br>
+                        STUDENT FROM DON BOSCO INSTITUTE<br>
+                        OF TECHNOLOGY, MUMBAI.<br><br>
+                        
+                        PASSIONATE ABOUT AI/ML WITH FOCUS<br>
+                        ON HEALTHCARE APPLICATIONS.<br><br>
+                        
+                        PUBLISHED IEEE RESEARCHER IN<br>
+                        MEDICAL IMAGING & EEG PROCESSING.<br><br>
+                        
+                        SKILLED IN DEEP LEARNING,<br>
+                        VISION TRANSFORMERS, AND<br>
+                        GENERATIVE AI.<br><br>
+                        
+                        <span style="color: #0f380f; font-weight: bold;">FINAL YEAR CGPA: 8.4/10</span><br>
+                        <span style="color: #0f380f; font-weight: bold;">LOCATION: MUMBAI, INDIA</span>
+                    </div>`,
+
+            projects: `<div style="font-size: 14px; margin-bottom: 12px; color: #0f380f; font-weight: bold;">PROJECTS</div>
+                       <div style="font-size: 10px; line-height: 1.5; color: #0f380f;">
+                           <span style="color: #0f380f; font-weight: bold;">[1] BRAIN STROKE DETECTION</span><br>
+                           ► CNN + OPENCV MODEL<br>
+                           ► 98.51% ACCURACY<br>
+                           ► TENSORFLOW & KERAS<br><br>
+                           
+                           <span style="color: #0f380f; font-weight: bold;">[2] VOXLINGO TRANSLATOR</span><br>
+                           ► SPEECH-TO-SPEECH AI<br>
+                           ► YOLOV5 INTEGRATION<br>
+                           ► MULTILINGUAL SUPPORT<br><br>
+                           
+                           <span style="color: #0f380f; font-weight: bold;">[3] RESUMEBAR PLATFORM</span><br>
+                           ► INTELLIGENT RESUME BUILDER<br>
+                           ► PHP + MYSQL BACKEND<br>
+                           ► RECRUITER MATCHING ALGO
+                       </div>`,
+
+            research: `<div style="font-size: 14px; margin-bottom: 12px; color: #0f380f; font-weight: bold;">IEEE RESEARCH</div>
+                       <div style="font-size: 10px; line-height: 1.5; color: #0f380f;">
+                           <span style="color: #0f380f; font-weight: bold;">[PAPER 1] PARVIT ARCHITECTURE</span><br>
+                           ► PARKINSON'S DETECTION<br>
+                           ► VISION TRANSFORMER + CNN<br>
+                           ► 98.25% ACCURACY ON EEG<br>
+                           ► UCSD DATASET<br><br>
+                           
+                           <span style="color: #0f380f; font-weight: bold;">[PAPER 2] DECEPNET FRAMEWORK</span><br>
+                           ► LIE DETECTION SYSTEM<br>
+                           ► S-TRANSFORM + CNN-DTLSTM<br>
+                           ► P300 SIGNAL ANALYSIS<br>
+                           ► 98.25% ACCURACY<br>
+                           ► 42 PARTICIPANTS STUDY
+                       </div>`,
+
+            skills: `<div style="font-size: 14px; margin-bottom: 12px; color: #0f380f; font-weight: bold;">TECHNICAL SKILLS</div>
+                     <div style="font-size: 10px; line-height: 1.5; color: #0f380f;">
+                         <span style="color: #0f380f; font-weight: bold;">PROGRAMMING:</span><br>
+                         ► PYTHON (EXPERT)<br>
+                         ► C PROGRAMMING<br><br>
+                         
+                         <span style="color: #0f380f; font-weight: bold;">AI/ML STACK:</span><br>
+                         ► DATA SCIENCE<br>
+                         ► GENERATIVE AI<br>
+                         ► VISION TRANSFORMERS<br>
+                         ► CNN ARCHITECTURES<br>
+                         ► S-TRANSFORM<br><br>
+                         
+                         <span style="color: #0f380f; font-weight: bold;">SOFT SKILLS:</span><br>
+                         ► PROJECT MANAGEMENT<br>
+                         ► BUSINESS STRATEGY<br>
+                         ► MARKETING
+                     </div>`,
+
+            contact: `<div style="font-size: 14px; margin-bottom: 12px; color: #0f380f; font-weight: bold;">CONTACT INFO</div>
+                      <div style="font-size: 10px; line-height: 1.5; color: #0f380f;">
+                          <span style="color: #0f380f; font-weight: bold;">EMAIL:</span><br>
+                          HANI.KOTIAN04@GMAIL.COM<br><br>
+                          
+                          <span style="color: #0f380f; font-weight: bold;">PHONE:</span><br>
+                          +91-7021317865<br><br>
+                          
+                          <span style="color: #0f380f; font-weight: bold;">LINKEDIN:</span><br>
+                          HTTPS://WWW.LINKEDIN.COM<br>
+                          /IN/HANI-KOTIAN-898646296/<br><br>
+                          
+                          <span style="color: #0f380f; font-weight: bold;">GITHUB:</span><br>
+                          HTTPS://GITHUB.COM<br>
+                          /HANIKOTIAN<br><br>
+                          
+                          <span style="color: #0f380f; font-weight: bold;">LOCATION:</span><br>
+                          MUMBAI, MAHARASHTRA, INDIA<br><br>
+                          
+                          IEEE MEMBER PROFILE<br>
+                          AVAILABLE ON REQUEST
+                      </div>`,
+
+            achievements: `<div style="font-size: 14px; margin-bottom: 12px; color: #0f380f; font-weight: bold;">ACHIEVEMENTS</div>
+                           <div style="font-size: 10px; line-height: 1.5; color: #0f380f;">
+                               <span style="color: #0f380f; font-weight: bold;">2ND RANK - INNOVEX</span><br>
+                               ANNUAL PROJECT EXHIBITION<br>
+                               APRIL 2025<br><br>
+                               
+                               <span style="color: #0f380f; font-weight: bold;">SOCIAL MEDIA ANALYTICS</span><br>
+                               CERTIFICATION - SIMPLILEARN<br>
+                               2025<br><br>
+                               
+                               <span style="color: #0f380f; font-weight: bold;">DATA ANALYTICS</span><br>
+                               CERTIFICATION - CENTUM<br>
+                               FOUNDATION 2024<br><br>
+                               
+                               <span style="color: #0f380f; font-weight: bold;">2 IEEE PUBLICATIONS</span><br>
+                               IN MEDICAL AI/ML<br>
+                               2024
+                           </div>`
+        };
+
+        function navigate(direction) {
+            if (currentScreen !== 'main') return;
+
+            const items = document.querySelectorAll('.menu-item');
+
+            if (direction === 'up' && currentIndex > 0) {
+                currentIndex--;
+            } else if (direction === 'down' && currentIndex < items.length - 1) {
+                currentIndex++;
+            }
+
+            updateSelection();
+        }
+
+        function updateSelection() {
+            const items = document.querySelectorAll('.menu-item');
+            items.forEach((item, index) => {
+                if (index === currentIndex) {
+                    item.classList.add('selected');
+                    item.textContent = '► ' + item.textContent.replace('► ', '').replace('  ', '');
+                } else {
+                    item.classList.remove('selected');
+                    item.textContent = '  ' + item.textContent.replace('► ', '').replace('  ', '');
+                }
+            });
+        }
+
+        function selectItem() {
+            if (currentScreen === 'main') {
+                const items = document.querySelectorAll('.menu-item');
+                const selectedItem = items[currentIndex];
+                const screen = selectedItem.getAttribute('data-screen');
+
+                if (screen && screen !== 'main') {
+                    showScreen(screen);
+                }
+            }
+        }
+
+        function showScreen(screen) {
+            currentScreen = screen;
+            const content = document.getElementById('content');
+            content.innerHTML = screens[screen];
+
+            // Update title
+            const title = document.querySelector('.title');
+            title.textContent = `HANI KOTIAN - ${screen.toUpperCase()}`;
+        }
+
+        function goBack() {
+            if (currentScreen !== 'main') {
+                currentScreen = 'main';
+                currentIndex = 0;
+                const content = document.getElementById('content');
+                content.innerHTML = screens.main;
+
+                // Update title
+                const title = document.querySelector('.title');
+                title.textContent = 'HANI KOTIAN - PORTFOLIO v2.5';
+
+                updateSelection();
+            }
+        }
+
+        // Mouse navigation for menu items
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('menu-item') && currentScreen === 'main') {
+                const items = Array.from(document.querySelectorAll('.menu-item'));
+                const clickedIndex = items.indexOf(e.target);
+
+                if (clickedIndex !== -1) {
+                    currentIndex = clickedIndex;
+                    updateSelection();
+
+                    // Auto-select after a short delay
+                    setTimeout(() => {
+                        const screen = e.target.getAttribute('data-screen');
+                        if (screen && screen !== 'main') {
+                            showScreen(screen);
+                        }
+                    }, 200);
+                }
+            }
+        });
+
+        // Keyboard controls
+        document.addEventListener('keydown', (e) => {
+            switch (e.key) {
+                case 'ArrowUp':
+                    navigate('up');
+                    break;
+                case 'ArrowDown':
+                    navigate('down');
+                    break;
+                case 'ArrowLeft':
+                    navigate('left');
+                    break;
+                case 'ArrowRight':
+                    navigate('right');
+                    break;
+                case 'Enter':
+                case ' ':
+                    selectItem();
+                    break;
+                case 'Escape':
+                    goBack();
+                    break;
+            }
+        });
+
+        // Initialize
+        updateSelection();
+    </script>
+</body>
+
+</html>
